@@ -80,28 +80,8 @@ const chainInfo = (
 };
 
 const networkInfo = {
-  "malaga-420": chainInfo(
-    "malaga-420",
-    "Malaga",
-    "https://rpc.malaga-420.cosmwasm.com:443",
-    "https://api.malaga-420.cosmwasm.com",
-    "Málaga",
-    "umlg",
-    6,
-    "wasm"
-  ),
-  "osmo-test-4": chainInfo(
-    "osmo-test-4",
-    "Osmosis Testnet",
-    "https://osmosis-testnet-rpc.allthatnode.com:26657/",
-    "https://osmosis-testnet-rpc.allthatnode.com:1317/",
-    "OSMO",
-    "uosmo",
-    6,
-    "osmo"
-  ),
-  "uni-3": chainInfo(
-    "uni-3",
+  "uni-6": chainInfo(
+    "uni-6",
     "Juno Testnet",
     "https://rpc.uni.junonetwork.io:443",
     "https://api.uni.junonetwork.io/",
@@ -109,16 +89,6 @@ const networkInfo = {
     "ujunox",
     6,
     "juno"
-  ),
-  "constantine-1": chainInfo(
-    "constantine-1",
-    "Archway Testnet",
-    "https://rpc.constantine-1.archway.tech:443",
-    "https://api.constantine-1.archway.tech",
-    "CONST",
-    "uconst",
-    6,
-    "archway"
   )
 };
 

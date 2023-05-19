@@ -1,8 +1,9 @@
 import "./App.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import networkInfo from "./wallet/network_info";
 import connectWallet from "./wallet/connect";
+import increment from "./contract/increment";
+import reset from "./contract/reset";
 
 function App() {
   // connectWallet에서 받아올 값
@@ -12,7 +13,7 @@ function App() {
   const [chainId, setChainId] = useState();
   // PLAY 버튼의 visibility 속성을 위한 변수
   const [visible, setVisible] = useState("hidden");
-  const navigate = useNavigate();
+  const [count, setCount] = useState(0);
 
   // connectWallet 으로 전달할 함수
   const getInfo = (client, address, balance, chainId) => {
@@ -76,39 +77,56 @@ function App() {
   const playGame = () => {
     return (
       <div className="menu">
-        <button
-          className="play-btn"
-          onClick={() => {
-            navigate("/play", {
-              state: {
-                address: address,
-                denom: balance.denom,
-                chainId: chainId
-              }
-            });
-          }}
-          style={{ visibility: visible }}
-        >
-          <span>PLAY</span>
-        </button>
-        {!client && <p>Choose your network and Connect wallet</p>}
+        {!client && (
+            <div>
+              Connect your wallet to Juno Testnet
+            </div>)}
         {client && (
-          <p>Click as many CosmWasm Icon as you can within 15 seconds!</p>
+            <div>
+              <div>
+                <p>Wallet Connected 😉</p>
+                <p>Count: {count}</p>
+              </div>
+
+              <button
+                  className="play-btn"
+                  onClick={
+                    async(e) => await incrementCount(1)
+                  } style={{visibility: visible}}
+              >
+                <span>increment</span>
+              </button>
+              <br/>
+              <br/>
+              <button
+                  className="play-btn"
+                  onClick={
+                    async(e) => await resetCount(0)
+                  } style={{visibility: visible}}
+              >
+                <span>reset</span>
+              </button>
+            </div>
         )}
-      </div>
+        </div>
     );
+  };
+
+  const incrementCount = async(cnt) => {
+    setTimeout(() => setCount(count + cnt), 7000);
+    await increment(client, address, cnt, chainId, balance.denom);
+  };
+
+  const resetCount = async(cnt) => {
+    setTimeout(() => setCount(cnt), 7000);
+    await reset(client, address, cnt, chainId, balance.denom);
   };
 
   return (
     <div className="App">
       <header>
         <div className="header-titles">
-          <img
-            alt="Cosmwasm Logo"
-            className="cosmwasm-logo"
-            src="/cosmwasm-logo.svg"
-          />
-          <h1>Clicker Game</h1>
+          <h1>Cosmos Session</h1>
         </div>
       </header>
       <div className="App-container">
