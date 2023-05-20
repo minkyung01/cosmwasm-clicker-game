@@ -11,8 +11,9 @@ function App() {
   const [address, setAddress] = useState();
   const [balance, setBalance] = useState();
   const [chainId, setChainId] = useState();
-  // PLAY 버튼의 visibility 속성을 위한 변수
+  // 버튼의 visibility 속성을 위한 변수
   const [visible, setVisible] = useState("hidden");
+  // count 값 설정을 위한 변수
   const [count, setCount] = useState(0);
 
   // connectWallet 으로 전달할 함수
@@ -33,7 +34,7 @@ function App() {
     setVisible("hidden");
   };
 
-  // 네트워크 별로 chainId에 따라서 DISCONNECT와 CONNECT 버튼이 나타나도록 구현
+  // Juno Testnet 연결 여부에 따라서 CONNECT/DISCONNECT 버튼이 나타나도록 구현
   const renderBtn = () => {
     return Object.keys(networkInfo).map((id) => {
       if (chainId === id) {
@@ -73,8 +74,8 @@ function App() {
     }
   };
 
-  // PLAY 버튼 클릭하면 /play 주소로 이동
-  const playGame = () => {
+  // Juno Testnet 연결 여부에 따라 보이는 컴포넌트가 달라지도록
+  const start = () => {
     return (
       <div className="menu">
         {!client && (
@@ -114,11 +115,13 @@ function App() {
 
   const incrementCount = async(cnt) => {
     setTimeout(() => setCount(count + cnt), 7000);
+    // 컨트랙트에 배포된 increment 함수 실행
     await increment(client, address, cnt, chainId, balance.denom);
   };
 
   const resetCount = async(cnt) => {
     setTimeout(() => setCount(cnt), 7000);
+    // 컨트랙트에 배포된 reset 함수 실행
     await reset(client, address, cnt, chainId, balance.denom);
   };
 
@@ -131,7 +134,7 @@ function App() {
       </header>
       <div className="App-container">
         <div className="App-menu-container">
-          {playGame()}
+          {start()}
           <div className="connect-wallet">{renderBtn()}</div>
         </div>
         {showWalletInfo()}

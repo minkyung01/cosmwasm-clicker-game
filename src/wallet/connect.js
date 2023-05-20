@@ -1,11 +1,11 @@
-// src/wallet/connect.js
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
 const connectWallet = async (event, chainInfo, { getInfo }) => {
-  // 사용자의 브라우저에 Keplr extension이 설치되었는지 확인
+  // 사용자의 브라우저에 Keplr extension이 설치되어 있는지 확인
   if (!window.getOfflineSigner || !window.keplr) {
-    alert("Please install keplr extension");
+    alert("Please install Keplr extension");
   }
+
   // Keplr wallet에 네트워크 추가
   if (window.keplr.experimentalSuggestChain) {
     try {
@@ -14,8 +14,9 @@ const connectWallet = async (event, chainInfo, { getInfo }) => {
       alert("Failed to suggest the chain");
     }
   } else {
-    alert("Please use the recent version of keplr extension");
+    alert("Please use the recent version of Keplr extension");
   }
+
   // Keplr에 chainId로의 접근 요청
   await window.keplr.enable(chainInfo.chainId);
   // 체인 ID를 이용해서 OfflineSigner 가져오기
@@ -27,11 +28,13 @@ const connectWallet = async (event, chainInfo, { getInfo }) => {
     chainInfo.rpc,
     offlineSigner
   );
+
   // 해당 주소의 balance 가져오기
   const balance = await client.getBalance(
     accounts[0].address,
     chainInfo.stakeCurrency.coinMinimalDenom
   );
+
   // 부모 컴포넌트로 값을 넘겨주기 위한 함수
   getInfo(client, accounts[0].address, balance, chainInfo.chainId);
 };

@@ -1,4 +1,3 @@
-// factory pattern 활용
 const chainInfo = (
   chainId,
   chainName,
@@ -10,7 +9,7 @@ const chainInfo = (
   bech32
 ) => {
   return {
-    // 체인 Id
+    // chain id
     chainId: chainId,
     // 사용자에게 보여질 chain 이름
     chainName: chainName,
@@ -79,6 +78,7 @@ const chainInfo = (
   };
 };
 
+// Juno Testnet에 대한 네트워크 정보
 const networkInfo = {
   "uni-6": chainInfo(
     "uni-6",
